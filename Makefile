@@ -1,6 +1,6 @@
 NAME = codexion
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -I librairie -I libft
+CFLAGS = -Wall -Werror -Wextra
 
 
 TOOLS_SRC = codexion.c
@@ -9,7 +9,8 @@ TOOLS_SRC = codexion.c
 
 MAIN_SRC = main.c
 
-ALL_SRC = $(TOOLS_SRC) $(MAIN_SRC)
+ALL_SRC = $(TOOLS_SRC)
+#$(MAIN_SRC)
 
 OBJ = $(ALL_SRC:.c=.o)
 
@@ -24,11 +25,9 @@ test: re
 
 clean:
 	rm -rf $(OBJ)
-	make -C  clean
 
 fclean: clean
 	rm -rf $(NAME)
-	make -C fclean
 
 re: fclean all
 
