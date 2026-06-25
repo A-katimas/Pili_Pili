@@ -1,9 +1,11 @@
 NAME = codexion
 CC = cc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -pthread
 
 
-TOOLS_SRC = codexion.c
+TOOLS_SRC = codexion.c \
+			parser.c \
+			utils.c
 
 # ORDERS_SRC = codexion.c
 

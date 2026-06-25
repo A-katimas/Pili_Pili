@@ -1,33 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jtardieu <jtardieu@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/06/23 17:26:47 by jtardieu          #+#    #+#             */
-/*   Updated: 2026/06/25 22:30:10 by jtardieu         ###   ########.fr       */
+/*   Created: 2026/06/25 22:31:15 by jtardieu          #+#    #+#             */
+/*   Updated: 2026/06/25 22:35:47 by jtardieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "stdlib.h"
-#include "string.h"
 #include "codexion.h"
 
-t_used	parting(int ac, char **av);
 
+#include <time.h>
 
-int	main(int ac, char **av)
+long long get_current_time_ms(void)
 {
-	t_used	used_var;
-
-	used_var = parting(ac, av);
-	if (used_var.error == 1)
-	{
-		printf("error no good argument");
-		return (1);
-	}
-	printf("%d", used_var.dongle_cooldown);
-	return (0);
+	return (time(NULL) * 1000);
 }
-
