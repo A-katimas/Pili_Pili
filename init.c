@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jtardieu <jtardieu@student.42mulhouse.f    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/06/26 16:59:03 by jtardieu          #+#    #+#             */
+/*   Updated: 2026/06/26 16:59:04 by jtardieu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "codexion.h"
 
 static void	init_dongle(t_dongle *dongle, int id)
@@ -63,15 +75,17 @@ int	init_simulation(t_sim *sim, t_used params)
 	sim->params = params;
 	sim->start_time = get_current_time_ms();
 	sim->simulation_active = 1;
+    sim->coders = NULL;
+    sim->dongles = NULL;
 
-	if (pthread_mutex_init(&sim->log_mutex, NULL) != 0)
+    if (pthread_mutex_init(&sim->log_mutex, NULL) != 0)
 		return (printf("Error: pthread_mutex_init failed\n"), 0);
 
 	if (!init_coders(sim))
-		return (0);
+		return (pthread_mutex_destroy(&sim->log_mutex),0);
 
 	if (!init_dongles(sim))
-		return (0);
+		return (pthread_mutex_destroy(&sim->log_mutex),0);
 
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: jtardieu <jtardieu@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 15:21:02 by jtardieu          #+#    #+#             */
-/*   Updated: 2026/06/26 16:29:54 by jtardieu         ###   ########.fr       */
+/*   Updated: 2026/06/26 17:39:06 by jtardieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include <pthread.h>
 #include <ctype.h>
 #include <unistd.h>
-#include <time.h>
+#include <sys/time.h>
 
 /* ==================== STRUCTURES ==================== */
 
@@ -72,8 +72,16 @@ int			validate_args(t_used used_var);
 // Utils
 long long	get_current_time_ms(void);
 void		cleanup_simulation(t_sim *sim);
+void		log_message(t_sim *sim, int coder_id, const char *action);
 
 // init.c
 int			init_simulation(t_sim *sim, t_used params);
+
+// log.c
+void	log_taken_dongle(t_sim *sim, int coder_id);
+void	log_is_compiling(t_sim *sim, int coder_id);
+void	log_is_debugging(t_sim *sim, int coder_id);
+void	log_is_refactoring(t_sim *sim, int coder_id);
+void	log_burned_out(t_sim *sim, int coder_id);
 
 #endif

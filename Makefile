@@ -7,6 +7,7 @@ TOOLS_SRC = codexion.c \
 			parser.c \
 			utils.c \
 			init.c \
+			log.c \
 
 # ORDERS_SRC = codexion.c
 

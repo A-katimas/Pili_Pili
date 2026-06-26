@@ -6,7 +6,7 @@
 /*   By: jtardieu <jtardieu@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/23 17:26:47 by jtardieu          #+#    #+#             */
-/*   Updated: 2026/06/26 16:29:00 by jtardieu         ###   ########.fr       */
+/*   Updated: 2026/06/26 17:42:50 by jtardieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 #include "string.h"
 #include "codexion.h"
 
-static int print_simulation_info(t_sim *sim);
-
+static void print_simulation_info(t_sim *sim);
+static void print_logs_messages(t_sim *sim);
 
 int	main(int ac, char **av)
 {
@@ -29,15 +29,36 @@ int	main(int ac, char **av)
 		return (printf("Error: failed to initialize simulation\n"),1);
 
 	print_simulation_info(&sim);
+	print_logs_messages(&sim);
 	cleanup_simulation(&sim);
 	return (0);
 }
-static int print_simulation_info(t_sim *sim)
+static void print_logs_messages(t_sim *sim)
 {
-	printf("Simulation Info:\n");
+	int i;
+
+	i = 0;
+	while (i < sim->params.number_of_coders)
+	{
+		usleep(100000);  // Attendre 100ms
+		log_taken_dongle(sim, i);
+		usleep(100000);  // Attendre 100ms
+		log_taken_dongle(sim, i);
+		usleep(100000);  // Attendre 100ms
+		log_is_compiling(sim, i);
+		usleep(100000);  // Attendre 100ms
+		log_is_debugging(sim, i);
+		usleep(100000);  // Attendre 100ms
+		log_is_refactoring(sim, i);
+		i++;
+	}
+}
+
+static void print_simulation_info(t_sim *sim)
+{
+	printf("\nSimulation Info:\n");
 	printf("  - Coders: %d\n", sim->params.number_of_coders);
 	printf("  - Dongles: %d\n", sim->params.number_of_coders);
 	printf("  - Scheduler: %s\n", sim->params.scheduler);
-	printf("  - Start time: %lld ms\n", sim->start_time);
-	return (1);
+	printf("  - Start time: %lld ms\n\n", sim->start_time);
 }
