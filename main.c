@@ -6,7 +6,7 @@
 /*   By: jtardieu <jtardieu@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/23 17:26:47 by jtardieu          #+#    #+#             */
-/*   Updated: 2026/06/26 17:42:50 by jtardieu         ###   ########.fr       */
+/*   Updated: 2026/06/26 17:48:58 by jtardieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,15 @@ static void print_logs_messages(t_sim *sim)
 	i = 0;
 	while (i < sim->params.number_of_coders)
 	{
-		usleep(100000);  // Attendre 100ms
+		usleep(1000);  // Attendre 100ms
 		log_taken_dongle(sim, i);
-		usleep(100000);  // Attendre 100ms
+		usleep(1000);  // Attendre 100ms
 		log_taken_dongle(sim, i);
-		usleep(100000);  // Attendre 100ms
+		usleep(1000);  // Attendre 100ms
 		log_is_compiling(sim, i);
-		usleep(100000);  // Attendre 100ms
+		usleep(1000);  // Attendre 100ms
 		log_is_debugging(sim, i);
-		usleep(100000);  // Attendre 100ms
+		usleep(1000);  // Attendre 100ms
 		log_is_refactoring(sim, i);
 		i++;
 	}
