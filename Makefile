@@ -5,7 +5,8 @@ CFLAGS = -Wall -Werror -Wextra -pthread
 
 TOOLS_SRC = codexion.c \
 			parser.c \
-			utils.c
+			utils.c \
+			init.c \
 
 # ORDERS_SRC = codexion.c
 
@@ -21,6 +22,8 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	$(CC) $(CFLAGS) main.c $(OBJ) -o $(NAME)
 
+valgrind: $(NAME)
+	valgrind --leak-check=full ./$(NAME) 10 1009 1000 1000 1000 5 2000 fifo
 
 test: re
 	./$(NAME) 10 1009 1000 1000 1000 5 2000 fifo

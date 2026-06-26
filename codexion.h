@@ -6,7 +6,7 @@
 /*   By: jtardieu <jtardieu@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 15:21:02 by jtardieu          #+#    #+#             */
-/*   Updated: 2026/06/25 23:35:09 by jtardieu         ###   ########.fr       */
+/*   Updated: 2026/06/26 16:29:54 by jtardieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,14 @@ typedef struct s_sim
 /* ==================== FUNCTIONS ==================== */
 
 // Parsing
-t_used	parting(int ac, char **av);
-int		validate_args(t_used used_var);
+t_used		parting(int ac, char **av);
+int			validate_args(t_used used_var);
 
 // Utils
 long long	get_current_time_ms(void);
+void		cleanup_simulation(t_sim *sim);
+
+// init.c
+int			init_simulation(t_sim *sim, t_used params);
 
 #endif
