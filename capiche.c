@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   capiche.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtardieu <jtardieu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jtardieu <jtardieu@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/23 16:29:53 by jtardieu          #+#    #+#             */
-/*   Updated: 2026/06/23 17:23:17 by jtardieu         ###   ########.fr       */
+/*   Updated: 2026/06/28 21:34:54 by jtardieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	main(int ac, char **av)
 		pthread_join(comme_tu_veux[i], &ret);
         printf("thread %d : %d\n", i, *(int *)ret);
 		i++;
-	}``
+	}
 	printf("counter : %d\n", counter);
 	free(comme_tu_veux);
 	return (0);

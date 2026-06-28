@@ -6,7 +6,7 @@
 /*   By: jtardieu <jtardieu@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/25 22:31:15 by jtardieu          #+#    #+#             */
-/*   Updated: 2026/06/26 17:38:19 by jtardieu         ###   ########.fr       */
+/*   Updated: 2026/06/28 23:07:23 by jtardieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #include <time.h>
 
-long long get_current_time_ms(void)
+long	long get_current_time_ms(void)
 {
 	struct timeval tv;
 
@@ -38,14 +38,13 @@ void	cleanup_simulation(t_sim *sim)
 	if (sim->dongles)
 	{
 		nb_dongles = sim->params.number_of_coders;
-		if (nb_dongles == 1)
-			nb_dongles = 1;
-		else
-			nb_dongles = sim->params.number_of_coders;
+
 		i = 0;
 		while (i < nb_dongles)
 		{
 			pthread_mutex_destroy(&sim->dongles[i].mutex);
+			pthread_cond_destroy(&sim->dongles[i].cond);
+			free(sim->dongles[i].queue);
 			i++;
 		}
 		free(sim->dongles);

@@ -8,6 +8,12 @@ TOOLS_SRC = codexion.c \
 			utils.c \
 			init.c \
 			log.c \
+			coder.c \
+			thread.c \
+			monitor.c \
+			dongle.c \
+			scheduler.c \
+			debug.c \
 
 # ORDERS_SRC = codexion.c
 
@@ -23,11 +29,11 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	$(CC) $(CFLAGS) main.c $(OBJ) -o $(NAME)
 
-valgrind: $(NAME)
-	valgrind --leak-check=full ./$(NAME) 10 1009 1000 1000 1000 5 2000 fifo
+valgrind: re
+	valgrind --leak-check=full ./$(NAME) 5 1000 100 100 10 5 100 fifo
 
 test: re
-	./$(NAME) 10 1009 1000 1000 1000 5 2000 fifo
+	./$(NAME) 4 800 200 200 100 5 50 edf
 
 clean:
 	rm -rf $(OBJ)

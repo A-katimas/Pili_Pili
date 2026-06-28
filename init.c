@@ -6,7 +6,7 @@
 /*   By: jtardieu <jtardieu@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/26 16:59:03 by jtardieu          #+#    #+#             */
-/*   Updated: 2026/06/26 16:59:04 by jtardieu         ###   ########.fr       */
+/*   Updated: 2026/06/28 22:49:20 by jtardieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@ static void	init_dongle(t_dongle *dongle, int id)
 	dongle->available = 1;
 	dongle->cooldown_end_time = 0;
 	pthread_mutex_init(&dongle->mutex, NULL);
+	pthread_cond_init(&dongle->cond, NULL);
+
+	dongle->queue_capacity = 10;
+	dongle->queue = malloc(sizeof(t_request) * dongle->queue_capacity);
+	dongle->queue_size = 0;
 }
 
 static void	init_coder(t_coder *coder, int id)
