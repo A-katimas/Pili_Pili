@@ -6,13 +6,12 @@
 /*   By: jtardieu <jtardieu@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/28 20:54:08 by jtardieu          #+#    #+#             */
-/*   Updated: 2026/06/28 23:19:15 by jtardieu         ###   ########.fr       */
+/*   Updated: 2026/06/28 23:43:31 by jtardieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-// Phase : COMPILER
 static void	compile_phase(t_sim *sim, t_coder *coder)
 {
 	t_dongle	*first_dongle;

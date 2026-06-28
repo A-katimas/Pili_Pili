@@ -6,25 +6,25 @@
 /*   By: jtardieu <jtardieu@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 15:21:02 by jtardieu          #+#    #+#             */
-/*   Updated: 2026/06/28 23:14:13 by jtardieu         ###   ########.fr       */
+/*   Updated: 2026/06/28 23:46:32 by jtardieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CODEXION_H
-#define CODEXION_H
+# define CODEXION_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <pthread.h>
-#include <ctype.h>
-#include <unistd.h>
-#include <sys/time.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
+# include <pthread.h>
+# include <ctype.h>
+# include <unistd.h>
+# include <sys/time.h>
 
 /* ==================== STRUCTURES ==================== */
 typedef struct s_request
 {
-	int		coder_id;
+	int			coder_id;
 	long long	arrival_time;
 	long long	deadline;
 }	t_request;
@@ -125,13 +125,14 @@ t_dongle	*get_right_dongle(t_sim *sim, int coder_id);
 t_dongle	*get_left_dongle(t_sim *sim, int coder_id);
 
 // scheduler.c
-void	add_to_queue(t_dongle *dongle, int coder_id, long long arrival_time, long long deadline);
-int		get_next_coder_fifo(t_dongle *dongle);
-int		get_next_coder_edf(t_dongle *dongle);
-int		get_next_coder(t_dongle *dongle, const char *scheduler);
+void		add_to_queue(t_dongle *dongle, int coder_id,
+				long long arrival_time, long long deadline);
+int			get_next_coder_fifo(t_dongle *dongle);
+int			get_next_coder_edf(t_dongle *dongle);
+int			get_next_coder(t_dongle *dongle, const char *scheduler);
 
 // debug.C
+void		print_queue_status(t_sim *sim, t_dongle *dongle, int coder_id);
+void		print_scheduler_choice(t_sim *sim, int dongle_id, int coder_chosen);
 
-void	print_queue_status(t_sim *sim, t_dongle *dongle, int coder_id);
-void	print_scheduler_choice(t_sim *sim, int dongle_id, int coder_chosen);
 #endif
