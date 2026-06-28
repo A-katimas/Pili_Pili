@@ -34,6 +34,8 @@ valgrind: re
 test: re
 	./$(NAME) 4 800 200 200 100 5 50 edf
 
+crach: re
+	./$(NAME) 4 600 300 300 300 5 50 edf
 clean:
 	rm -rf $(OBJ)
 
