@@ -6,60 +6,54 @@
 /*   By: jtardieu <jtardieu@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/28 22:43:47 by jtardieu          #+#    #+#             */
-/*   Updated: 2026/06/28 23:04:38 by jtardieu         ###   ########.fr       */
+/*   Updated: 2026/06/28 23:40:10 by jtardieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-// Ajouter une demande à la queue
-void	add_to_queue(t_dongle *dongle, int coder_id, long long arrival_time, long long deadline)
+void	add_to_queue(t_dongle *dongle, int coder_id,
+	long long arrival_time, long long deadline)
 {
-	// Redimensionner si nécessaire
 	if (dongle->queue_size >= dongle->queue_capacity)
 	{
 		dongle->queue_capacity *= 2;
 		dongle->queue = realloc(dongle->queue,
-		                        sizeof(t_request) * dongle->queue_capacity);
+				sizeof(t_request) * dongle->queue_capacity);
 	}
-
-	// Ajouter à la fin
 	dongle->queue[dongle->queue_size].coder_id = coder_id;
 	dongle->queue[dongle->queue_size].arrival_time = arrival_time;
 	dongle->queue[dongle->queue_size].deadline = deadline;
 	dongle->queue_size++;
 }
 
-// Obtenir le PROCHAIN coder selon le scheduler
 int	get_next_coder_fifo(t_dongle *dongle)
 {
 	int	coder_id;
+	int i;
 
 	if (dongle->queue_size == 0)
 		return (-1);
-
-	// FIFO : prendre le premier
 	coder_id = dongle->queue[0].coder_id;
-
-	// Supprimer de la queue
-	for (int i = 0; i < dongle->queue_size - 1; i++)
+	i = 0;
+	while (i < dongle->queue_size - 1)
+	{
 		dongle->queue[i] = dongle->queue[i + 1];
+		i++;
+	}
 	dongle->queue_size--;
-
 	return (coder_id);
 }
 
-// EDF : obtenir le coder avec la deadline la plus proche
 int	get_next_coder_edf(t_dongle *dongle)
 {
 	int		best_index;
 	int		i;
 	int		coder_id;
+	int		j;
 
 	if (dongle->queue_size == 0)
 		return (-1);
-
-	// Trouver celui avec la deadline la plus proche
 	best_index = 0;
 	i = 1;
 	while (i < dongle->queue_size)
@@ -68,18 +62,16 @@ int	get_next_coder_edf(t_dongle *dongle)
 			best_index = i;
 		i++;
 	}
-
 	coder_id = dongle->queue[best_index].coder_id;
-
-	// Supprimer de la queue
-	for (int j = best_index; j < dongle->queue_size - 1; j++)
+	j = best_index;
+	while (j < dongle->queue_size - 1)
+	{
 		dongle->queue[j] = dongle->queue[j + 1];
+		j++;
+	}
 	dongle->queue_size--;
-
 	return (coder_id);
 }
-
-// Obtenir le prochain selon le scheduler
 
 int	get_next_coder(t_dongle *dongle, const char *scheduler)
 {
@@ -91,6 +83,5 @@ int	get_next_coder(t_dongle *dongle, const char *scheduler)
 		result = get_next_coder_edf(dongle);
 	else
 		result = -1;
-
 	return (result);
 }

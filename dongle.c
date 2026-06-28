@@ -6,37 +6,11 @@
 /*   By: jtardieu <jtardieu@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/28 20:56:14 by jtardieu          #+#    #+#             */
-/*   Updated: 2026/06/28 23:01:28 by jtardieu         ###   ########.fr       */
+/*   Updated: 2026/06/28 23:29:36 by jtardieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
-// Prendre UN dongle
-//int	take_dongle(t_sim *sim, t_dongle *dongle, int coder_id)
-//{
-//	long long			current_time;
-//	long long			deadline;
-//	struct timespec		timeout;
-//	int					next_coder;
-
-//	pthread_mutex_lock(&dongle->mutex);
-//	current_time = get_current_time_ms() - sim->start_time;
-//	deadline = sim->coders[coder_id - 1].last_compile_start + sim->params.time_to_burnout;
-//	add_to_queue(dongle, coder_id, current_time, deadline);
-//	while (!dongle->available || dongle->cooldown_end_time > current_time)
-//	{
-//		timeout.tv_sec = 0;
-//		timeout.tv_nsec = 10000000;
-
-//		pthread_cond_timedwait(&dongle->cond, &dongle->mutex, &timeout);
-//		current_time = get_current_time_ms() - sim->start_time;
-//	}
-//	dongle->available = 0;
-//	log_taken_dongle(sim, coder_id);
-//	pthread_mutex_unlock(&dongle->mutex);
-//	return (1);
-//}
-
 
 int	take_dongle(t_sim *sim, t_dongle *dongle, int coder_id)
 {
@@ -46,24 +20,16 @@ int	take_dongle(t_sim *sim, t_dongle *dongle, int coder_id)
 	int					next_coder;
 
 	pthread_mutex_lock(&dongle->mutex);
-
 	current_time = get_current_time_ms() - sim->start_time;
-	deadline = sim->coders[coder_id - 1].last_compile_start + sim->params.time_to_burnout;
-
-	// Ajouter à la queue
+	deadline = sim->coders[coder_id - 1].last_compile_start
+		+ sim->params.time_to_burnout;
 	add_to_queue(dongle, coder_id, current_time, deadline);
-
-
-	print_queue_status(sim, dongle, coder_id);
-	// Attendre que ce soit son tour ET que le dongle soit disponible
+	//print_queue_status(sim, dongle, coder_id);
 	while (1)
 	{
 		current_time = get_current_time_ms() - sim->start_time;
-
-		// Vérifier si le cooldown est fini
 		if (dongle->cooldown_end_time <= current_time && dongle->available)
 		{
-			// Vérifier si c'est notre tour
 			next_coder = get_next_coder(dongle, sim->params.scheduler);
 			if (next_coder == coder_id)
 			{
@@ -74,21 +40,18 @@ int	take_dongle(t_sim *sim, t_dongle *dongle, int coder_id)
 			}
 			else if (next_coder != -1)
 			{
-				// C'est pas notre tour, remettre en queue
-				deadline = sim->coders[next_coder - 1].last_compile_start + sim->params.time_to_burnout;
+				deadline = sim->coders[next_coder - 1].last_compile_start
+					+ sim->params.time_to_burnout;
 				add_to_queue(dongle, next_coder, current_time, deadline);
 			}
 		}
-
-		// Attendre et réessayer
 		timeout.tv_sec = 0;
-		timeout.tv_nsec = 10000000;  // 10ms
+		timeout.tv_nsec = 10000000;
 		pthread_cond_timedwait(&dongle->cond, &dongle->mutex, &timeout);
 	}
-
 	return (0);
 }
-// Libérer UN dongle
+
 void	release_dongle(t_sim *sim, t_dongle *dongle)
 {
 	long long	current_time;
@@ -98,11 +61,9 @@ void	release_dongle(t_sim *sim, t_dongle *dongle)
 	dongle->cooldown_end_time = current_time + sim->params.dongle_cooldown;
 	dongle->available = 1;
 	pthread_cond_signal(&dongle->cond);
-
 	pthread_mutex_unlock(&dongle->mutex);
 }
 
-// Obtenir le dongle gauche d'un coder
 t_dongle	*get_left_dongle(t_sim *sim, int coder_id)
 {
 	int	dongle_index;
@@ -111,11 +72,9 @@ t_dongle	*get_left_dongle(t_sim *sim, int coder_id)
 		dongle_index = 0;
 	else
 		dongle_index = coder_id - 1;
-
 	return (&sim->dongles[dongle_index]);
 }
 
-// Obtenir le dongle droit d'un coder
 t_dongle	*get_right_dongle(t_sim *sim, int coder_id)
 {
 	int	dongle_index;

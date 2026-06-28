@@ -6,7 +6,7 @@
 /*   By: jtardieu <jtardieu@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 15:21:02 by jtardieu          #+#    #+#             */
-/*   Updated: 2026/06/28 23:03:20 by jtardieu         ###   ########.fr       */
+/*   Updated: 2026/06/28 23:14:13 by jtardieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,11 @@ typedef struct s_used
 	char	*scheduler;
 }	t_used;
 
+typedef struct safe_couter
+{
+	int				*counter;
+	pthread_mutex_t	*lock;
+}	t_safe;
 
 typedef struct s_sim
 {

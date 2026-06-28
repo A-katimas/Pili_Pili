@@ -6,7 +6,7 @@
 /*   By: jtardieu <jtardieu@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/26 16:59:30 by jtardieu          #+#    #+#             */
-/*   Updated: 2026/06/26 16:59:31 by jtardieu         ###   ########.fr       */
+/*   Updated: 2026/06/28 23:34:25 by jtardieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,28 +51,30 @@ int	validate_args(t_used used_var)
 	if (used_var.time_to_refactor <= 0)
 		return (printf("Error: time_to_refactor must be positive\n"), 0);
 	if (used_var.number_of_compiles_required <= 0)
-		return (printf("Error: number_of_compiles_required must be positive\n"), 0);
+		return (printf("Error: number_of_compiles_required must be positive\n")
+			, 0);
 	if (used_var.dongle_cooldown < 0)
 		return (printf("Error: dongle_cooldown cannot be negative\n"), 0);
 	if (strcmp(used_var.scheduler, "fifo") != 0 &&
-	    strcmp(used_var.scheduler, "edf") != 0)
+		strcmp(used_var.scheduler, "edf") != 0)
 		return (printf("Error: scheduler must be 'fifo' or 'edf'\n"), 0);
 	return (1);
 }
 
-int is_all_valid_number(char **av)
+int	is_all_valid_number(char **av)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	while (i < 8)
 	{
 		if (!is_valid_number(av[i]))
 		{
-			printf("Error: argument %d must be a positive number (got: %s)\n", i, av[i]);
+			printf("Error: argument %d must be a positive number (got: %s)\n",
+				i, av[i]);
 			return (0);
 		}
-			i++;
+		i++;
 	}
 	return (1);
 }
@@ -83,7 +85,6 @@ int	is_valid_number(const char *str)
 
 	if (!str || str[0] == '\0')
 		return (0);
-
 	i = 0;
 	while (str[i])
 	{

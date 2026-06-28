@@ -6,22 +6,19 @@
 /*   By: jtardieu <jtardieu@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/25 22:31:15 by jtardieu          #+#    #+#             */
-/*   Updated: 2026/06/28 23:07:23 by jtardieu         ###   ########.fr       */
+/*   Updated: 2026/06/28 23:41:41 by jtardieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
-
-
 #include <time.h>
 
-long	long get_current_time_ms(void)
+long long	get_current_time_ms(void)
 {
-	struct timeval tv;
+	struct timeval	tv;
 
 	if (gettimeofday(&tv, NULL) < 0)
 		return (-1);
-
 	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
 
@@ -38,7 +35,6 @@ void	cleanup_simulation(t_sim *sim)
 	if (sim->dongles)
 	{
 		nb_dongles = sim->params.number_of_coders;
-
 		i = 0;
 		while (i < nb_dongles)
 		{
@@ -56,7 +52,6 @@ void	cleanup_simulation(t_sim *sim)
 void	log_message(t_sim *sim, int coder_id, const char *action)
 {
 	long long	elapsed_time;
-
 
 	elapsed_time = get_current_time_ms() - sim->start_time;
 	pthread_mutex_lock(&sim->log_mutex);

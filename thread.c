@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   thread.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jtardieu <jtardieu@student.42mulhouse.f    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/06/28 23:40:26 by jtardieu          #+#    #+#             */
+/*   Updated: 2026/06/28 23:40:54 by jtardieu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "codexion.h"
 
 // Créer tous les threads des coders
@@ -12,12 +24,10 @@ int	create_coder_threads(t_sim *sim)
 		args = malloc(sizeof(t_thread_args));
 		if (!args)
 			return (printf("Error: malloc failed for thread args\n"), 0);
-
 		args->sim = sim;
 		args->coder = &sim->coders[i];
-
 		if (pthread_create(&sim->coders[i].thread, NULL,
-		                   coder_routine, args) != 0)
+				coder_routine, args) != 0)
 		{
 			printf("Error: pthread_create failed for coder %d\n", i + 1);
 			free(args);
@@ -46,7 +56,6 @@ int	create_monitor_thread(t_sim *sim)
 {
 	if (pthread_create(&sim->monitor_thread, NULL, monitor_routine, sim) != 0)
 		return (printf("Error: pthread_create failed\n"), 0);
-
 	return (1);
 }
 

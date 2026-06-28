@@ -6,7 +6,7 @@
 /*   By: jtardieu <jtardieu@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/26 16:59:03 by jtardieu          #+#    #+#             */
-/*   Updated: 2026/06/28 22:49:20 by jtardieu         ###   ########.fr       */
+/*   Updated: 2026/06/28 23:30:35 by jtardieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ static void	init_dongle(t_dongle *dongle, int id)
 	dongle->cooldown_end_time = 0;
 	pthread_mutex_init(&dongle->mutex, NULL);
 	pthread_cond_init(&dongle->cond, NULL);
-
 	dongle->queue_capacity = 10;
 	dongle->queue = malloc(sizeof(t_request) * dongle->queue_capacity);
 	dongle->queue_size = 0;
@@ -44,11 +43,9 @@ static int	init_dongles(t_sim *sim)
 		nb_dongles = 1;
 	else
 		nb_dongles = sim->params.number_of_coders;
-
 	sim->dongles = malloc(sizeof(t_dongle) * nb_dongles);
 	if (!sim->dongles)
 		return (printf("Error: malloc failed for dongles\n"), 0);
-
 	i = 0;
 	while (i < nb_dongles)
 	{
@@ -65,7 +62,6 @@ static int	init_coders(t_sim *sim)
 	sim->coders = malloc(sizeof(t_coder) * sim->params.number_of_coders);
 	if (!sim->coders)
 		return (printf("Error: malloc failed for coders\n"), 0);
-
 	i = 0;
 	while (i < sim->params.number_of_coders)
 	{
@@ -80,18 +76,13 @@ int	init_simulation(t_sim *sim, t_used params)
 	sim->params = params;
 	sim->start_time = get_current_time_ms();
 	sim->simulation_active = 1;
-    sim->coders = NULL;
-    sim->dongles = NULL;
-
-    if (pthread_mutex_init(&sim->log_mutex, NULL) != 0)
+	sim->coders = NULL;
+	sim->dongles = NULL;
+	if (pthread_mutex_init(&sim->log_mutex, NULL) != 0)
 		return (printf("Error: pthread_mutex_init failed\n"), 0);
-
 	if (!init_coders(sim))
 		return (pthread_mutex_destroy(&sim->log_mutex),0);
-
 	if (!init_dongles(sim))
 		return (pthread_mutex_destroy(&sim->log_mutex),0);
-
 	return (1);
 }
-

@@ -3,8 +3,7 @@ CC = cc
 CFLAGS = -Wall -Werror -Wextra -pthread
 
 
-TOOLS_SRC = codexion.c \
-			parser.c \
+TOOLS_SRC = parser.c \
 			utils.c \
 			init.c \
 			log.c \

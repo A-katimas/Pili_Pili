@@ -6,7 +6,7 @@
 /*   By: jtardieu <jtardieu@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/28 20:54:08 by jtardieu          #+#    #+#             */
-/*   Updated: 2026/06/28 21:10:29 by jtardieu         ###   ########.fr       */
+/*   Updated: 2026/06/28 23:19:15 by jtardieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ static void	compile_phase(t_sim *sim, t_coder *coder)
 {
 	t_dongle	*first_dongle;
 	t_dongle	*second_dongle;
+	t_dongle	*tmp;
 
 	first_dongle = get_left_dongle(sim, coder->id);
 	second_dongle = get_right_dongle(sim, coder->id);
 	if (first_dongle->id > second_dongle->id)
 	{
-		// Inverser l'ordre
-		t_dongle *tmp = first_dongle;
+		tmp = first_dongle;
 		first_dongle = second_dongle;
 		second_dongle = tmp;
 	}
@@ -36,7 +36,6 @@ static void	compile_phase(t_sim *sim, t_coder *coder)
 	release_dongle(sim, first_dongle);
 	release_dongle(sim, second_dongle);
 }
-
 
 static void	debug_phase(t_sim *sim, t_coder *coder)
 {
@@ -57,7 +56,6 @@ static int	has_burned_out(t_sim *sim, t_coder *coder)
 
 	current_time = get_current_time_ms() - sim->start_time;
 	time_since_last_compile = current_time - coder->last_compile_start;
-
 	if (time_since_last_compile > sim->params.time_to_burnout)
 	{
 		coder->burned_out = 1;
@@ -80,18 +78,15 @@ void	*coder_routine(void *arg)
 		if (has_burned_out(sim, coder))
 		{
 			log_burned_out(sim, coder->id);
-			break;
+			break ;
 		}
 		if (coder->compile_count >= sim->params.number_of_compiles_required)
-			break;
+			break ;
 		compile_phase(sim, coder);
 		debug_phase(sim, coder);
 		refactor_phase(sim, coder);
 	}
 	if (args)
-	{
 		free(args);
-		args = NULL;
-	}
 	return (NULL);
 }

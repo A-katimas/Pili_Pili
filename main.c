@@ -6,7 +6,7 @@
 /*   By: jtardieu <jtardieu@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/23 17:26:47 by jtardieu          #+#    #+#             */
-/*   Updated: 2026/06/28 22:22:14 by jtardieu         ###   ########.fr       */
+/*   Updated: 2026/06/28 23:20:25 by jtardieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,13 @@ int	main(int ac, char **av)
 		return (printf("error no good argument"),1);
 	if (!init_simulation(&sim, used_var))
 		return (printf("Error: failed to initialize simulation\n"),1);
-
 	printf("✓ Simulation initialized !\n\n");
 	if (!create_coder_threads(&sim))
 		return (cleanup_simulation(&sim),1);
 	wait_all_threads(&sim);
 	wait_monitor_thread(&sim);
 	printf("\n✓ Simulation finished !\n");
-
-	//print_simulation_info(&sim);
-	//print_logs_messages(&sim);
 	cleanup_simulation(&sim);
-	//cleanup_simulation(&sim);
 	return (0);
 }
 //static void print_logs_messages(t_sim *sim)
