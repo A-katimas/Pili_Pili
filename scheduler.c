@@ -6,7 +6,7 @@
 /*   By: jtardieu <jtardieu@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/28 22:43:47 by jtardieu          #+#    #+#             */
-/*   Updated: 2026/06/28 23:40:10 by jtardieu         ###   ########.fr       */
+/*   Updated: 2026/06/30 13:49:41 by jtardieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	add_to_queue(t_dongle *dongle, int coder_id,
 int	get_next_coder_fifo(t_dongle *dongle)
 {
 	int	coder_id;
-	int i;
+	int	i;
 
 	if (dongle->queue_size == 0)
 		return (-1);

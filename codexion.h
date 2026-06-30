@@ -6,7 +6,7 @@
 /*   By: jtardieu <jtardieu@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 15:21:02 by jtardieu          #+#    #+#             */
-/*   Updated: 2026/06/28 23:46:32 by jtardieu         ###   ########.fr       */
+/*   Updated: 2026/06/30 14:03:04 by jtardieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ int			validate_args(t_used used_var);
 long long	get_current_time_ms(void);
 void		cleanup_simulation(t_sim *sim);
 void		log_message(t_sim *sim, int coder_id, const char *action);
+int			is_dongle_available(t_dongle *dongle, long long current_time);
+long long	get_coder_deadline(t_sim *sim, int coder_id);
 
 // init.c
 int			init_simulation(t_sim *sim, t_used params);
@@ -123,7 +125,8 @@ void		release_dongle(t_sim *sim, t_dongle *dongle);
 int			take_dongle(t_sim *sim, t_dongle *dongle, int coder_id);
 t_dongle	*get_right_dongle(t_sim *sim, int coder_id);
 t_dongle	*get_left_dongle(t_sim *sim, int coder_id);
-
+int			handle_dongle_availability(t_sim *sim, t_dongle *dongle,
+				int coder_id, long long current_time);
 // scheduler.c
 void		add_to_queue(t_dongle *dongle, int coder_id,
 				long long arrival_time, long long deadline);

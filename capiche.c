@@ -6,7 +6,7 @@
 /*   By: jtardieu <jtardieu@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/23 16:29:53 by jtardieu          #+#    #+#             */
-/*   Updated: 2026/06/28 23:17:04 by jtardieu         ###   ########.fr       */
+/*   Updated: 2026/06/30 13:50:17 by jtardieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	main(int ac, char **av)
 	i = 0;
 	counter = 0;
 	while (i < 5)
-		pthread_create(&comme_tu_veux[i++], NULL, foo, &(t_safe){&counter,&a});
+		pthread_create(&comme_tu_veux[i++], NULL, foo, &(t_safe){&counter, &a});
 	i = 0;
 	while (i < 5)
 	{

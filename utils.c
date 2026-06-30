@@ -6,7 +6,7 @@
 /*   By: jtardieu <jtardieu@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/25 22:31:15 by jtardieu          #+#    #+#             */
-/*   Updated: 2026/06/28 23:41:41 by jtardieu         ###   ########.fr       */
+/*   Updated: 2026/06/30 14:00:52 by jtardieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,16 @@ void	log_message(t_sim *sim, int coder_id, const char *action)
 	pthread_mutex_lock(&sim->log_mutex);
 	printf("%lld %d %s\n", elapsed_time, coder_id, action);
 	pthread_mutex_unlock(&sim->log_mutex);
+}
+
+long long	get_coder_deadline(t_sim *sim, int coder_id)
+{
+	return (sim->coders[coder_id - 1].last_compile_start
+		+ sim->params.time_to_burnout);
+}
+
+// Vérifier si dongle est disponible
+int	is_dongle_available(t_dongle *dongle, long long current_time)
+{
+	return (dongle->cooldown_end_time <= current_time && dongle->available);
 }

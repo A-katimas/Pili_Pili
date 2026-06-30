@@ -6,7 +6,7 @@
 /*   By: jtardieu <jtardieu@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/26 16:59:03 by jtardieu          #+#    #+#             */
-/*   Updated: 2026/06/28 23:30:35 by jtardieu         ###   ########.fr       */
+/*   Updated: 2026/06/30 13:51:21 by jtardieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,8 @@ int	init_simulation(t_sim *sim, t_used params)
 	if (pthread_mutex_init(&sim->log_mutex, NULL) != 0)
 		return (printf("Error: pthread_mutex_init failed\n"), 0);
 	if (!init_coders(sim))
-		return (pthread_mutex_destroy(&sim->log_mutex),0);
+		return (pthread_mutex_destroy(&sim->log_mutex), 0);
 	if (!init_dongles(sim))
-		return (pthread_mutex_destroy(&sim->log_mutex),0);
+		return (pthread_mutex_destroy(&sim->log_mutex), 0);
 	return (1);
 }

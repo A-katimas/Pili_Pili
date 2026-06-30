@@ -6,14 +6,14 @@
 /*   By: jtardieu <jtardieu@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/26 16:59:30 by jtardieu          #+#    #+#             */
-/*   Updated: 2026/06/28 23:34:25 by jtardieu         ###   ########.fr       */
+/*   Updated: 2026/06/30 13:52:10 by jtardieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
 int	is_valid_number(const char *str);
-int is_all_valid_number(char **av);
+int	is_all_valid_number(char **av);
 
 t_used	parting(int ac, char **av)
 {
@@ -55,8 +55,8 @@ int	validate_args(t_used used_var)
 			, 0);
 	if (used_var.dongle_cooldown < 0)
 		return (printf("Error: dongle_cooldown cannot be negative\n"), 0);
-	if (strcmp(used_var.scheduler, "fifo") != 0 &&
-		strcmp(used_var.scheduler, "edf") != 0)
+	if (strcmp(used_var.scheduler, "fifo") != 0
+		&& strcmp(used_var.scheduler, "edf") != 0)
 		return (printf("Error: scheduler must be 'fifo' or 'edf'\n"), 0);
 	return (1);
 }
