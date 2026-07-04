@@ -8,7 +8,7 @@
       <img src="https://media1.tenor.com/m/99ovDICLZvsAAAAd/interesting-hmm.gif">
     </td>
     <td align="center">
-      <h2>Master the race for resources before the deadline masters you</h2>
+      <h2>Master the race before the deadline masters yee</h2>
     </td>
   </tr>
 </table>
