@@ -5,8 +5,8 @@
 <table>
   <tr>
     <td>
-      <img src="https://media1.tenor.com/m/99ovDICLZvsAAAAd/interesting-hmm.gif">
-      <img src="https://media1.tenor.com/m/1DwPMqeXJ-MAAAAC/okay-okay-gif.gif">
+      <img src="https://media1.tenor.com/m/99ovDICLZvsAAAAd/interesting-hmm.gif"width="200">
+      <img src="https://media1.tenor.com/m/1DwPMqeXJ-MAAAAC/okay-okay-gif.gif" width="200">
     </td>
     <td align="center">
       <h2>Master the race before the deadline masters yee</h2>
