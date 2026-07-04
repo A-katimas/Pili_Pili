@@ -88,3 +88,46 @@ make
 
 ### ✅ Deadlock Prevention
 - **Lock Ordering** 🔑: Always grab dongles in ascending ID order
+
+## 📚 Resources
+
+### Threading & Concurrency
+- [POSIX Threads Manual](https://man7.org/linux/man-pages/man7/pthreads.7.html)
+- [pthread_mutex](https://man7.org/linux/man-pages/man3/pthread_mutex_init.3p.html)
+- [pthread_cond](https://man7.org/linux/man-pages/man3/pthread_cond_wait.3p.html)
+
+### Scheduling
+- **Coffman's Conditions** for Deadlock
+- **Lock Ordering** Technique
+- **Earliest Deadline First (EDF)** Scheduling
+
+### 🙏 Human Help
+
+| Person | Contribution |
+|--------|--------------|
+| 👤 **aspenle** | Helped me understand mutexes & synchronization concepts |
+| 👤 **agilliard** | Debugged race conditions & deadlock issues |
+
+Huge thanks to them! 💪
+
+## 🤖 AI Usage
+
+| What | Tool | How |
+|------|------|-----|
+| 🐛 Debugging | **Claude** | Race condition & deadlock analysis & fixes |
+| 💬 VS Code Copilot | **GitHub Copilot** | Code suggestions & snippets |
+
+**Human stayed in charge of:** Understanding every line, testing, final decisions, and making sure it actually works! 💪
+
+**Claude was the main AI partner** - helpful for understanding some problems, and implementing solutions correctly! 🔥
+
+## 🎓 What I Learn
+
+✅ POSIX thread creation & management  
+✅ Mutual exclusion & resource protection  
+✅ Condition variables & efficient waiting  
+✅ Scheduling policies & fairness  
+✅ Deadlock prevention techniques  
+✅ Real-time monitoring & synchronization
+
+---
