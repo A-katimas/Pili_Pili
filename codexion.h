@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   codexion.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtardieu <jtardieu@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: jtardieu <jtardieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 15:21:02 by jtardieu          #+#    #+#             */
-/*   Updated: 2026/06/30 14:03:04 by jtardieu         ###   ########.fr       */
+/*   Updated: 2026/07/07 10:38:32 by jtardieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ void		*coder_routine(void *arg);
 int			create_coder_threads(t_sim *sim);
 void		wait_all_threads(t_sim *sim);
 void		wait_monitor_thread(t_sim *sim);
+int			create_monitor_thread(t_sim *sim);
 
 // monitor.c
 void		*monitor_routine(void *arg);
