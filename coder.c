@@ -6,13 +6,15 @@
 /*   By: jtardieu <jtardieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/28 20:54:08 by jtardieu          #+#    #+#             */
-/*   Updated: 2026/07/07 11:10:32 by jtardieu         ###   ########.fr       */
+/*   Updated: 2026/07/07 14:11:47 by jtardieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-static void	compile_phase(t_sim *sim, t_coder *coder)
+int	is_burn(t_sim *sim, t_coder *coder);
+
+static int	compile_phase(t_sim *sim, t_coder *coder)
 {
 	t_dongle	*first_dongle;
 	t_dongle	*second_dongle;
@@ -28,24 +30,27 @@ static void	compile_phase(t_sim *sim, t_coder *coder)
 	}
 	take_dongle(sim, first_dongle, coder->id);
 	take_dongle(sim, second_dongle, coder->id);
-	log_is_compiling(sim, coder->id);
+	log_message(sim, coder->id, "is compiling");
 	coder->last_compile_start = get_current_time_ms() - sim->start_time;
 	coder->compile_count++;
 	usleep(sim->params.time_to_compile * 1000);
 	release_dongle(sim, first_dongle);
 	release_dongle(sim, second_dongle);
+	return (0);
 }
 
-static void	debug_phase(t_sim *sim, t_coder *coder)
+static int	debug_phase(t_sim *sim, t_coder *coder)
 {
-	log_is_debugging(sim, coder->id);
+	log_message(sim, coder->id, "is debugging");
 	usleep(sim->params.time_to_debug * 1000);
+	return (0);
 }
 
-static void	refactor_phase(t_sim *sim, t_coder *coder)
+static int	refactor_phase(t_sim *sim, t_coder *coder)
 {
-	log_is_refactoring(sim, coder->id);
+	log_message(sim, coder->id, "is refactoring");
 	usleep(sim->params.time_to_refactor * 1000);
+	return (0);
 }
 
 static int	has_burned_out(t_sim *sim, t_coder *coder)
@@ -55,10 +60,15 @@ static int	has_burned_out(t_sim *sim, t_coder *coder)
 
 	current_time = get_current_time_ms() - sim->start_time;
 	time_since_last_compile = current_time - coder->last_compile_start;
-	if (time_since_last_compile > sim->params.time_to_burnout)
+	if (time_since_last_compile >= sim->params.time_to_burnout)
 	{
 		coder->burned_out = 1;
+		sim->burnout = 1;
 		return (1);
+	}
+	else if (sim->burnout)
+	{
+		return (2);
 	}
 	return (0);
 }
@@ -72,20 +82,35 @@ void	*coder_routine(void *arg)
 	args = (t_thread_args *)arg;
 	coder = args->coder;
 	sim = args->sim;
+	coder->last_compile_start = get_current_time_ms();
 	while (sim->simulation_active && !coder->burned_out)
 	{
-		if (has_burned_out(sim, coder))
-		{
-			log_burned_out(sim, coder->id);
+		if (is_burn(sim, coder))
 			break ;
-		}
 		if (coder->compile_count >= sim->params.number_of_compiles_required)
 			break ;
-		compile_phase(sim, coder);
-		debug_phase(sim, coder);
-		refactor_phase(sim, coder);
+		if (is_burn(sim, coder) || compile_phase(sim, coder))
+			break ;
+		if (is_burn(sim, coder) || debug_phase(sim, coder))
+			break ;
+		if (is_burn(sim, coder) || refactor_phase(sim, coder))
+			break ;
 	}
 	if (args)
 		free(args);
 	return (NULL);
+}
+
+int	is_burn(t_sim *sim ,t_coder *coder)
+{
+	const int	res = has_burned_out(sim, coder);
+
+	if (res == 1)
+	{
+		log_message(sim, coder->id, "burned out");
+		return (1);
+	}
+	else if (res == 2)
+		return (1);
+	return (0);
 }

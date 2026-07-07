@@ -6,7 +6,6 @@ CFLAGS = -Wall -Werror -Wextra -pthread -g
 TOOLS_SRC = parser.c \
 			utils.c \
 			init.c \
-			log.c \
 			coder.c \
 			thread.c \
 			monitor.c \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtardieu <jtardieu@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: jtardieu <jtardieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/26 16:59:03 by jtardieu          #+#    #+#             */
-/*   Updated: 2026/06/30 13:51:21 by jtardieu         ###   ########.fr       */
+/*   Updated: 2026/07/07 13:52:14 by jtardieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int	init_simulation(t_sim *sim, t_used params)
 	sim->simulation_active = 1;
 	sim->coders = NULL;
 	sim->dongles = NULL;
+	sim->burnout = 0;
 	if (pthread_mutex_init(&sim->log_mutex, NULL) != 0)
 		return (printf("Error: pthread_mutex_init failed\n"), 0);
 	if (!init_coders(sim))

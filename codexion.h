@@ -6,7 +6,7 @@
 /*   By: jtardieu <jtardieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 15:21:02 by jtardieu          #+#    #+#             */
-/*   Updated: 2026/07/07 10:38:32 by jtardieu         ###   ########.fr       */
+/*   Updated: 2026/07/07 14:12:32 by jtardieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,11 @@ typedef struct s_sim
 	t_coder			*coders;
 	t_dongle		*dongles;
 	pthread_mutex_t	log_mutex;
+	pthread_mutex_t	state_mutex;
 	pthread_t		monitor_thread;
 	long long		start_time;
 	int				simulation_active;
+	int				burnout;
 }	t_sim;
 
 typedef struct s_thread_args
@@ -102,12 +104,6 @@ long long	get_coder_deadline(t_sim *sim, int coder_id);
 // init.c
 int			init_simulation(t_sim *sim, t_used params);
 
-// log.c
-void		log_taken_dongle(t_sim *sim, int coder_id);
-void		log_is_compiling(t_sim *sim, int coder_id);
-void		log_is_debugging(t_sim *sim, int coder_id);
-void		log_is_refactoring(t_sim *sim, int coder_id);
-void		log_burned_out(t_sim *sim, int coder_id);
 
 //coder.c
 void		*coder_routine(void *arg);
