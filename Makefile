@@ -1,6 +1,6 @@
 NAME = codexion
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -pthread
+CFLAGS = -Wall -Werror -Wextra -pthread -g
 
 
 TOOLS_SRC = parser.c \
@@ -29,7 +29,7 @@ $(NAME): $(OBJ)
 	$(CC) $(CFLAGS) main.c $(OBJ) -o $(NAME)
 
 valgrind: re
-	valgrind --leak-check=full ./$(NAME) 5 1000 100 100 10 5 100 fifo
+	valgrind --tool=helgrind ./$(NAME) 5 1000 100 100 10 5 100 fifo
 
 test: re
 	./$(NAME) 4 800 200 200 100 5 50 edf
