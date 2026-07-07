@@ -31,7 +31,7 @@ valgrind: re
 	valgrind --tool=helgrind ./$(NAME) 5 1000 100 100 10 5 100 fifo
 
 test: re
-	./$(NAME) 4 800 200 200 100 5 50 edf
+	./$(NAME) 4 799 200 200 100 5 200 edf
 
 crach: re
 	./$(NAME) 4 600 300 300 300 5 50 edf

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtardieu <jtardieu@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: jtardieu <jtardieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/25 22:31:15 by jtardieu          #+#    #+#             */
-/*   Updated: 2026/06/30 14:00:52 by jtardieu         ###   ########.fr       */
+/*   Updated: 2026/07/07 14:20:17 by jtardieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,14 @@ void	log_message(t_sim *sim, int coder_id, const char *action)
 {
 	long long	elapsed_time;
 
+	if (sim->burnout)
+	{
+		return ;
+	}
 	elapsed_time = get_current_time_ms() - sim->start_time;
 	pthread_mutex_lock(&sim->log_mutex);
-	printf("%lld %d %s\n", elapsed_time, coder_id, action);
+	if (!sim->burnout)
+		printf("%lld %d %s\n", elapsed_time, coder_id, action);
 	pthread_mutex_unlock(&sim->log_mutex);
 }
 

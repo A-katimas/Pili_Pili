@@ -6,7 +6,7 @@
 /*   By: jtardieu <jtardieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 15:21:02 by jtardieu          #+#    #+#             */
-/*   Updated: 2026/07/07 14:12:32 by jtardieu         ###   ########.fr       */
+/*   Updated: 2026/07/07 15:33:51 by jtardieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,6 @@ long long	get_coder_deadline(t_sim *sim, int coder_id);
 // init.c
 int			init_simulation(t_sim *sim, t_used params);
 
-
 //coder.c
 void		*coder_routine(void *arg);
 
@@ -134,5 +133,8 @@ int			get_next_coder(t_dongle *dongle, const char *scheduler);
 // debug.C
 void		print_queue_status(t_sim *sim, t_dongle *dongle, int coder_id);
 void		print_scheduler_choice(t_sim *sim, int dongle_id, int coder_chosen);
+
+//burnsecu.c
+int			is_burn(t_sim *sim, t_coder *coder);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jtardieu <jtardieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/28 20:54:08 by jtardieu          #+#    #+#             */
-/*   Updated: 2026/07/07 14:11:47 by jtardieu         ###   ########.fr       */
+/*   Updated: 2026/07/07 15:33:38 by jtardieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,10 @@ static int	compile_phase(t_sim *sim, t_coder *coder)
 	}
 	take_dongle(sim, first_dongle, coder->id);
 	take_dongle(sim, second_dongle, coder->id);
+	if (is_burn(sim, coder))
+	{
+		return (1);
+	}
 	log_message(sim, coder->id, "is compiling");
 	coder->last_compile_start = get_current_time_ms() - sim->start_time;
 	coder->compile_count++;
@@ -63,13 +67,12 @@ static int	has_burned_out(t_sim *sim, t_coder *coder)
 	if (time_since_last_compile >= sim->params.time_to_burnout)
 	{
 		coder->burned_out = 1;
+		log_message(sim, coder->id, "burned out");
 		sim->burnout = 1;
 		return (1);
 	}
 	else if (sim->burnout)
-	{
 		return (2);
-	}
 	return (0);
 }
 
@@ -99,18 +102,4 @@ void	*coder_routine(void *arg)
 	if (args)
 		free(args);
 	return (NULL);
-}
-
-int	is_burn(t_sim *sim ,t_coder *coder)
-{
-	const int	res = has_burned_out(sim, coder);
-
-	if (res == 1)
-	{
-		log_message(sim, coder->id, "burned out");
-		return (1);
-	}
-	else if (res == 2)
-		return (1);
-	return (0);
 }
