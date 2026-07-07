@@ -12,6 +12,7 @@ TOOLS_SRC = parser.c \
 			dongle.c \
 			scheduler.c \
 			debug.c \
+			burnsecu.c \
 
 # ORDERS_SRC = codexion.c
 

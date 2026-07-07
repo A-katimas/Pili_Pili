@@ -6,7 +6,7 @@
 /*   By: jtardieu <jtardieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 15:21:02 by jtardieu          #+#    #+#             */
-/*   Updated: 2026/07/07 15:33:51 by jtardieu         ###   ########.fr       */
+/*   Updated: 2026/07/07 18:41:55 by jtardieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ int			init_simulation(t_sim *sim, t_used params);
 
 //coder.c
 void		*coder_routine(void *arg);
+int	has_burned_out(t_sim *sim, t_coder *coder);
 
 // thread.c
 int			create_coder_threads(t_sim *sim);

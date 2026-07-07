@@ -6,7 +6,7 @@
 /*   By: jtardieu <jtardieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/28 20:54:08 by jtardieu          #+#    #+#             */
-/*   Updated: 2026/07/07 15:33:38 by jtardieu         ###   ########.fr       */
+/*   Updated: 2026/07/07 18:41:38 by jtardieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static int	refactor_phase(t_sim *sim, t_coder *coder)
 	return (0);
 }
 
-static int	has_burned_out(t_sim *sim, t_coder *coder)
+int	has_burned_out(t_sim *sim, t_coder *coder)
 {
 	long long	current_time;
 	long long	time_since_last_compile;
