@@ -3,16 +3,16 @@ CC = cc
 CFLAGS = -Wall -Werror -Wextra -pthread -g
 
 
-TOOLS_SRC = parser.c \
-			utils.c \
-			init.c \
-			coder.c \
-			thread.c \
-			monitor.c \
-			dongle.c \
-			scheduler.c \
-			debug.c \
-			burnsecu.c \
+TOOLS_SRC = codexion_folders/parser.c \
+			codexion_folders/utils.c \
+			codexion_folders/init.c \
+			codexion_folders/coder.c \
+			codexion_folders/thread.c \
+			codexion_folders/monitor.c \
+			codexion_folders/dongle.c \
+			codexion_folders/scheduler.c \
+			codexion_folders/debug.c \
+			codexion_folders/burnsecu.c \
 
 # ORDERS_SRC = codexion.c
 
@@ -26,7 +26,7 @@ OBJ = $(ALL_SRC:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(CFLAGS) main.c $(OBJ) -o $(NAME)
+	$(CC) $(CFLAGS) codexion_folders/main.c $(OBJ) -o $(NAME)
 
 valgrind: re
 	./$(NAME) 5 150 100 100 10 5 1000000000 fifo
