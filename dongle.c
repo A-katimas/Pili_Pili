@@ -6,7 +6,7 @@
 /*   By: jtardieu <jtardieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/28 20:56:14 by jtardieu          #+#    #+#             */
-/*   Updated: 2026/07/07 14:12:59 by jtardieu         ###   ########.fr       */
+/*   Updated: 2026/07/08 17:38:51 by jtardieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 //print_queue_status(sim, dongle, coder_id); // ligne 27
 
+
 int	take_dongle(t_sim *sim, t_dongle *dongle, int coder_id)
 {
-	long long		current_time;
-	struct timespec	timeout;
+	long long	current_time;
+	long long	time;
 
 	pthread_mutex_lock(&dongle->mutex);
 	current_time = get_current_time_ms() - sim->start_time;
@@ -25,18 +26,16 @@ int	take_dongle(t_sim *sim, t_dongle *dongle, int coder_id)
 		get_coder_deadline(sim, coder_id));
 	while (1)
 	{
+		if (is_burn(sim, &sim->coders[coder_id - 1]))
+			return (pthread_mutex_unlock(&dongle->mutex), 1);
 		current_time = get_current_time_ms() - sim->start_time;
 		if (is_dongle_available(dongle, current_time))
-		{
 			if (handle_dongle_availability(sim, dongle, coder_id, current_time))
-			{
-				pthread_mutex_unlock(&dongle->mutex);
-				return (1);
-			}
-		}
-		timeout.tv_sec = 0;
-		timeout.tv_nsec = 10000000;
-		pthread_cond_timedwait(&dongle->cond, &dongle->mutex, &timeout);
+				return (pthread_mutex_unlock(&dongle->mutex), 1);
+		time = sim->coders[coder_id - 1].last_compile_start
+			+ sim->params.time_to_burnout;
+		pthread_cond_timedwait(&dongle->cond, &dongle->mutex,
+			&(t_stp){time / 1000, (time % 1000) * 1000000});
 	}
 	return (0);
 }

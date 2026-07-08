@@ -6,7 +6,7 @@
 /*   By: jtardieu <jtardieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/28 20:39:37 by jtardieu          #+#    #+#             */
-/*   Updated: 2026/07/07 13:59:11 by jtardieu         ###   ########.fr       */
+/*   Updated: 2026/07/08 15:23:12 by jtardieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,18 @@ static int	all_coders_done(t_sim *sim)
 	int	i;
 
 	i = 0;
+	pthread_mutex_lock(&sim->state_mutex);
 	while (i < sim->params.number_of_coders)
 	{
 		if (sim->coders[i].compile_count
 			< sim->params.number_of_compiles_required)
+		{
+			pthread_mutex_unlock(&sim->state_mutex);
 			return (0);
+		}
 		i++;
 	}
+	pthread_mutex_unlock(&sim->state_mutex);
 	return (1);
 }
 
@@ -53,12 +58,16 @@ void	*monitor_routine(void *arg)
 	{
 		if (someone_burned_out(sim))
 		{
+			pthread_mutex_lock (&sim->state_mutex);
 			sim->simulation_active = 0;
+			pthread_mutex_unlock (&sim->state_mutex);
 			break ;
 		}
 		if (all_coders_done(sim))
 		{
+			pthread_mutex_lock (&sim->state_mutex);
 			sim->simulation_active = 0;
+			pthread_mutex_unlock (&sim->state_mutex);
 			break ;
 		}
 		usleep(10000);

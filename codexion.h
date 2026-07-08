@@ -6,7 +6,7 @@
 /*   By: jtardieu <jtardieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 15:21:02 by jtardieu          #+#    #+#             */
-/*   Updated: 2026/07/07 18:41:55 by jtardieu         ###   ########.fr       */
+/*   Updated: 2026/07/08 16:33:08 by jtardieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,15 @@ typedef struct s_coder
 
 typedef struct s_used
 {
-	int		error;
-	int		number_of_coders;
-	int		time_to_burnout;
-	int		time_to_compile;
-	int		time_to_debug;
-	int		time_to_refactor;
-	int		number_of_compiles_required;
-	int		dongle_cooldown;
-	char	*scheduler;
+	int			error;
+	int			number_of_coders;
+	long long	time_to_burnout;
+	int			time_to_compile;
+	int			time_to_debug;
+	int			time_to_refactor;
+	int			number_of_compiles_required;
+	int			dongle_cooldown;
+	char		*scheduler;
 }	t_used;
 
 typedef struct safe_couter
@@ -88,6 +88,8 @@ typedef struct s_thread_args
 	t_coder	*coder;
 }	t_thread_args;
 
+typedef struct timespec	t_stp;
+
 /* ==================== FUNCTIONS ==================== */
 
 // Parsing
@@ -105,8 +107,8 @@ long long	get_coder_deadline(t_sim *sim, int coder_id);
 int			init_simulation(t_sim *sim, t_used params);
 
 //coder.c
-void		*coder_routine(void *arg);
-int	has_burned_out(t_sim *sim, t_coder *coder);
+int			used_coder_routine(t_coder	*coder, t_sim *sim);
+int			has_burned_out(t_sim *sim, t_coder *coder);
 
 // thread.c
 int			create_coder_threads(t_sim *sim);
@@ -137,5 +139,6 @@ void		print_scheduler_choice(t_sim *sim, int dongle_id, int coder_chosen);
 
 //burnsecu.c
 int			is_burn(t_sim *sim, t_coder *coder);
+void		*coder_routine(void *arg);
 
 #endif

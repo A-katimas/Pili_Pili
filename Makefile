@@ -29,10 +29,11 @@ $(NAME): $(OBJ)
 	$(CC) $(CFLAGS) main.c $(OBJ) -o $(NAME)
 
 valgrind: re
-	valgrind --tool=helgrind ./$(NAME) 5 1000 100 100 10 5 100 fifo
+	./$(NAME) 5 150 100 100 10 5 1000000000 fifo
+	valgrind --tool=helgrind ./$(NAME) 5 150 100 100 10 5 1000000000 fifo
 
 test: re
-	./$(NAME) 4 799 200 200 100 5 200 edf
+	./$(NAME) 4 800 200 200 100 5 200 edf
 
 crach: re
 	./$(NAME) 4 600 300 300 300 5 50 edf

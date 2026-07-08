@@ -6,13 +6,11 @@
 /*   By: jtardieu <jtardieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/28 20:54:08 by jtardieu          #+#    #+#             */
-/*   Updated: 2026/07/07 18:41:38 by jtardieu         ###   ########.fr       */
+/*   Updated: 2026/07/08 17:34:38 by jtardieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
-
-int	is_burn(t_sim *sim, t_coder *coder);
 
 static int	compile_phase(t_sim *sim, t_coder *coder)
 {
@@ -31,16 +29,16 @@ static int	compile_phase(t_sim *sim, t_coder *coder)
 	take_dongle(sim, first_dongle, coder->id);
 	take_dongle(sim, second_dongle, coder->id);
 	if (is_burn(sim, coder))
-	{
-		return (1);
-	}
+		return (release_dongle(sim, first_dongle),
+			release_dongle(sim, second_dongle), 1);
 	log_message(sim, coder->id, "is compiling");
 	coder->last_compile_start = get_current_time_ms() - sim->start_time;
+	pthread_mutex_lock (&sim->state_mutex);
 	coder->compile_count++;
+	pthread_mutex_unlock (&sim->state_mutex);
 	usleep(sim->params.time_to_compile * 1000);
-	release_dongle(sim, first_dongle);
-	release_dongle(sim, second_dongle);
-	return (0);
+	return (release_dongle(sim, first_dongle),
+		release_dongle(sim, second_dongle), 0);
 }
 
 static int	debug_phase(t_sim *sim, t_coder *coder)
@@ -76,18 +74,12 @@ int	has_burned_out(t_sim *sim, t_coder *coder)
 	return (0);
 }
 
-void	*coder_routine(void *arg)
+int	used_coder_routine(t_coder	*coder, t_sim *sim)
 {
-	t_thread_args	*args;
-	t_coder			*coder;
-	t_sim			*sim;
-
-	args = (t_thread_args *)arg;
-	coder = args->coder;
-	sim = args->sim;
-	coder->last_compile_start = get_current_time_ms();
+	pthread_mutex_lock (&sim->state_mutex);
 	while (sim->simulation_active && !coder->burned_out)
 	{
+		pthread_mutex_unlock (&sim->state_mutex);
 		if (is_burn(sim, coder))
 			break ;
 		if (coder->compile_count >= sim->params.number_of_compiles_required)
@@ -98,8 +90,8 @@ void	*coder_routine(void *arg)
 			break ;
 		if (is_burn(sim, coder) || refactor_phase(sim, coder))
 			break ;
+		pthread_mutex_lock (&sim->state_mutex);
 	}
-	if (args)
-		free(args);
-	return (NULL);
+	pthread_mutex_unlock (&sim->state_mutex);
+	return (0);
 }
