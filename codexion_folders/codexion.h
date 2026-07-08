@@ -6,7 +6,7 @@
 /*   By: jtardieu <jtardieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 15:21:02 by jtardieu          #+#    #+#             */
-/*   Updated: 2026/07/08 16:33:08 by jtardieu         ###   ########.fr       */
+/*   Updated: 2026/07/09 00:08:14 by jtardieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,5 +140,7 @@ void		print_scheduler_choice(t_sim *sim, int dongle_id, int coder_chosen);
 //burnsecu.c
 int			is_burn(t_sim *sim, t_coder *coder);
 void		*coder_routine(void *arg);
+int			is_dongel_good(t_dongle *first_dongle, t_dongle *second_dongle,
+				t_coder *coder, t_sim *sim );
 
 #endif

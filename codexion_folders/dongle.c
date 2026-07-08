@@ -6,15 +6,13 @@
 /*   By: jtardieu <jtardieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/28 20:56:14 by jtardieu          #+#    #+#             */
-/*   Updated: 2026/07/08 17:38:51 by jtardieu         ###   ########.fr       */
+/*   Updated: 2026/07/09 00:05:31 by jtardieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
 //print_queue_status(sim, dongle, coder_id); // ligne 27
-
-
 int	take_dongle(t_sim *sim, t_dongle *dongle, int coder_id)
 {
 	long long	current_time;

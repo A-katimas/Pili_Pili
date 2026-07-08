@@ -45,4 +45,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: test all clean fclean re
+.PHONY: test all clean fclean lint lint-strict re

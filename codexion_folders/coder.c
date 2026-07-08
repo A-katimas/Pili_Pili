@@ -6,7 +6,7 @@
 /*   By: jtardieu <jtardieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/28 20:54:08 by jtardieu          #+#    #+#             */
-/*   Updated: 2026/07/08 18:19:57 by jtardieu         ###   ########.fr       */
+/*   Updated: 2026/07/09 00:10:16 by jtardieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,10 @@ static int	compile_phase(t_sim *sim, t_coder *coder)
 {
 	t_dongle	*first_dongle;
 	t_dongle	*second_dongle;
-	t_dongle	*tmp;
 
 	first_dongle = get_left_dongle(sim, coder->id);
 	second_dongle = get_right_dongle(sim, coder->id);
-	if (first_dongle == second_dongle)
-		return (coder->burned_out = 1, log_message(sim, coder->id,
-				"burned out"), 1);
-	if (first_dongle->id > second_dongle->id)
-	{
-		tmp = first_dongle;
-		first_dongle = second_dongle;
-		second_dongle = tmp;
-	}
+	is_dongel_good(first_dongle, second_dongle, coder, sim);
 	take_dongle(sim, first_dongle, coder->id);
 	take_dongle(sim, second_dongle, coder->id);
 	if (is_burn(sim, coder))
